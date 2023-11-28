@@ -6,23 +6,39 @@ using UnityEngine.UI;
 public class rightScript : MonoBehaviour
 {
     [SerializeField] Text text;
+    [SerializeField] GameObject gate;
+    string operation;
+    int num;
 
-    // Start is called before the first frame update
-    void Start()
+    //populate the texts in their respective scripts with the static data retrieved from the menu manager, or open a new data manager present in both scenes with static info
+
+    public void populate()
     {
+        operation = text.ToString()[0].ToString().Trim();
 
-        //populate the texts in their respective scripts with the static data retrieved from the menu manager, or open a new data manager present in both scenes with static info
+        num = int.Parse(text.ToString().Substring(1));
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (operation == "+")
+        {
+            gate.GetComponent<gateManager>().alterArrows(num);
+        }
+        else if (operation == "-")
+        {
+            gate.GetComponent<gateManager>().alterArrows(-num);
+        }
+        else if (operation == "x")
+        {
+            gate.GetComponent<gateManager>().alterArrows(num, 1);
+        }
+        else if (operation == "/")
+        {
+            gate.GetComponent<gateManager>().alterArrows(num, 2);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        //add collision check here
 
         if (collision.gameObject.name == "ArrowP")
         {

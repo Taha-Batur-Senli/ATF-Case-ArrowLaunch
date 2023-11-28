@@ -15,9 +15,5 @@ public class arrowManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!stop)
-        {
-            transform.Translate(new Vector3(0, 0, 25) * Time.deltaTime);
-        }
     }
 }
