@@ -19,7 +19,7 @@ public class gameManager : MonoBehaviour
     void Start()
     {
         gameOver.SetActive(false);
-        createArrow();
+        createArrow(Vector3.zero);
     }
 
     // Update is called once per frame
@@ -40,10 +40,11 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public GameObject createArrow()
+    public GameObject createArrow(Vector3 loc)
     {
         GameObject arrowToCreate = Instantiate(arrowPrefab);
         arrowToCreate.transform.SetParent(arrows.transform);
+        arrowToCreate.transform.position = loc;
         createdArrows++;
         return arrowToCreate;
     }

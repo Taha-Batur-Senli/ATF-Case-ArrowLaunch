@@ -5,44 +5,50 @@ using UnityEngine.UI;
 
 public class rightScript : MonoBehaviour
 {
-    [SerializeField] Text text;
+    [SerializeField] TextMesh text;
     [SerializeField] GameObject gate;
     string operation;
     int num;
+    bool doOnce = true;
 
     //populate the texts in their respective scripts with the static data retrieved from the menu manager, or open a new data manager present in both scenes with static info
 
-    public void populate()
+    public void readData(Vector3 loc)
     {
-        operation = text.ToString()[0].ToString().Trim();
-
-        num = int.Parse(text.ToString().Substring(1));
+        operation = text.text;
+        num = int.Parse(operation.Substring(1));
+        operation = operation[0].ToString().Trim();
 
         if (operation == "+")
         {
-            gate.GetComponent<gateManager>().alterArrows(num);
+            gate.GetComponent<gateManager>().alterArrows(num, loc);
         }
         else if (operation == "-")
         {
-            gate.GetComponent<gateManager>().alterArrows(-num);
+            gate.GetComponent<gateManager>().alterArrows(-num, loc);
         }
-        else if (operation == "x")
+        else if (operation == "*")
         {
-            gate.GetComponent<gateManager>().alterArrows(num, 1);
+            gate.GetComponent<gateManager>().alterArrows(num, loc, 1);
         }
         else if (operation == "/")
         {
-            gate.GetComponent<gateManager>().alterArrows(num, 2);
+            gate.GetComponent<gateManager>().alterArrows(num, loc, 2);
         }
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        //add collision check here
 
-        if (collision.gameObject.name == "ArrowP")
+        //add collision check here
+        if (collision.gameObject.GetComponent<arrowManager>())
         {
-            Debug.Log("ssR");
+            if (doOnce)
+            {
+                readData(collision.transform.position);
+            }
+            doOnce = false;
         }
     }
 }

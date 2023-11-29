@@ -15,9 +15,9 @@ public class gateManager : MonoBehaviour
         //populate the texts in their respective scripts with the static data retrieved from the menu manager, or open a new data manager present in both scenes with static info
     }
 
-    public void alterArrows(int value, int specialoperator = 0)
+    public void alterArrows(int value, Vector3 loc, int specialoperator = 0)
     {
-        gameObject.transform.parent.GetComponent<gateToArrow>().setArrows(value, specialoperator);
+        gameObject.transform.parent.GetComponent<gateToArrow>().setArrows(value, loc, specialoperator);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -31,11 +31,13 @@ public class gateManager : MonoBehaviour
             if(dice == 0)
             {
                 //do left
+                left.readData(collision.transform.position);
 
             }
             else
             {
                 //do right
+                right.readData(collision.transform.position);
             }
         }
     }

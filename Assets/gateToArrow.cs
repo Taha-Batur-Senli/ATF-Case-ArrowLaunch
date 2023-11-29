@@ -6,20 +6,21 @@ public class gateToArrow : MonoBehaviour
 {
     [SerializeField] gameManager manager;
 
-    public void setArrows(int num, int specialOperator = 0)
+    public void setArrows(int num, Vector3 arrowLoc, int specialOperator = 0)
     {
         if (specialOperator == 0)
         {
             if (num > 0)
             {
+                Debug.Log(num);
                 for (int i = 0; i < num; i++)
                 {
-                    manager.createArrow();
+                    manager.createArrow(arrowLoc);
                 }
             }
             else
             {
-                for (int i = 0; i < num; i++)
+                for (int i = 0; i < Mathf.Abs(num); i++)
                 {
                     if (manager.arrows.transform.childCount > 1)
                     {
@@ -36,9 +37,10 @@ public class gateToArrow : MonoBehaviour
         }
         else if (specialOperator == 1)
         {
-            for (int i = 0; i < manager.createdArrows * (num - 1); i++)
+            int stat = manager.createdArrows * (num - 1);
+            for (int i = 0; i < stat; i++)
             {
-                manager.createArrow();
+                manager.createArrow(arrowLoc);
             }
         }
         else if (specialOperator == 2)
@@ -51,7 +53,9 @@ public class gateToArrow : MonoBehaviour
             }
             else
             {
-                for (int i = manager.createdArrows / num; i < manager.createdArrows; i++)
+                int stat = manager.createdArrows / num;
+                int stat2 = manager.createdArrows;
+                for (int i = stat; i < stat2; i++)
                 {
                     if (manager.arrows.transform.childCount > 1)
                     {
