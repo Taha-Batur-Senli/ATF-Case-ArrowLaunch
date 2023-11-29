@@ -10,6 +10,7 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject gameOver;
     [SerializeField] public GameObject left;
     [SerializeField] public GameObject right;
+    [SerializeField] public GameObject ground;
     [SerializeField] public int width;
     [SerializeField] public List<string> powerUpList = new List<string>();
     public bool stop = false;
@@ -51,9 +52,10 @@ public class gameManager : MonoBehaviour
 
     public void destroyArrow()
     {
-        if(arrows.transform.childCount > 1)
+        if(createdArrows > 1)
         {
-            Destroy(arrows.transform.GetChild(0).gameObject);
+            Destroy(arrows.transform.GetChild(createdArrows - 1).gameObject);
+            createdArrows--;
         }
         else
         {

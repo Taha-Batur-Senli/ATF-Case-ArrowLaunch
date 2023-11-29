@@ -8,6 +8,7 @@ public class gateManager : MonoBehaviour
 {
     [SerializeField] rightScript right;
     [SerializeField] leftScript left;
+    bool doOnce = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,23 +23,34 @@ public class gateManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        int dice = -1;
-
-        if (collision.gameObject.GetComponent<CapsuleCollider>() != null)
+        if(doOnce)
         {
-            dice = Random.Range(0,1);
+            int dice = -1;
 
-            if(dice == 0)
+            if (collision.gameObject.GetComponent<CapsuleCollider>() != null)
             {
-                //do left
-                left.readData(collision.transform.position);
+                dice = Random.Range(0, 1);
 
-            }
-            else
-            {
-                //do right
-                right.readData(collision.transform.position);
+                if (dice == 0)
+                {
+                    //do left
+                    left.readData(collision.transform.position);
+
+                }
+                else
+                {
+                    //do right
+                    right.readData(collision.transform.position);
+                }
             }
         }
+        doOnce = false;
+    }
+
+    public void clearAll()
+    {
+        doOnce = false;
+        left.doOnce = false;
+        right.doOnce = false;
     }
 }

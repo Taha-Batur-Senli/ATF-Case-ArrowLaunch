@@ -9,7 +9,7 @@ public class rightScript : MonoBehaviour
     [SerializeField] GameObject gate;
     string operation;
     int num;
-    bool doOnce = true;
+    public bool doOnce = true;
 
     //populate the texts in their respective scripts with the static data retrieved from the menu manager, or open a new data manager present in both scenes with static info
 
@@ -49,6 +49,7 @@ public class rightScript : MonoBehaviour
                 readData(collision.transform.position);
             }
             doOnce = false;
+            gate.GetComponent<gateManager>().clearAll();
         }
     }
 }

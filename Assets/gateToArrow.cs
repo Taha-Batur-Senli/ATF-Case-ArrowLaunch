@@ -12,10 +12,11 @@ public class gateToArrow : MonoBehaviour
         {
             if (num > 0)
             {
-                Debug.Log(num);
+                Vector3 locNew = arrowLoc;
                 for (int i = 0; i < num; i++)
                 {
-                    manager.createArrow(arrowLoc);
+                    locNew += new Vector3(2.2f,0,0);
+                    manager.createArrow(locNew);
                 }
             }
             else
@@ -38,9 +39,11 @@ public class gateToArrow : MonoBehaviour
         else if (specialOperator == 1)
         {
             int stat = manager.createdArrows * (num - 1);
+            Vector3 locNew = arrowLoc;
             for (int i = 0; i < stat; i++)
             {
-                manager.createArrow(arrowLoc);
+                locNew += new Vector3(2.2f, 0, 0);
+                manager.createArrow(locNew);
             }
         }
         else if (specialOperator == 2)
