@@ -33,7 +33,10 @@ public class menuManager : MonoBehaviour
 
     private void Start()
     {
-        levelsInJson = JsonUtility.FromJson<Levels>(jsonFile.text);
+        //levelsInJson = JsonUtility.FromJson<Levels>(Application.persistentDataPath + "/levelInfo.json");
+        string s = System.IO.File.ReadAllText(Application.persistentDataPath + "/levelInfo.json");
+        levelsInJson = JsonUtility.FromJson<Levels>(s);
+        Debug.Log(s);   
         setLevels(levelsInJson, currLevel);
         getrows();
 
@@ -56,8 +59,13 @@ public class menuManager : MonoBehaviour
     {
         if(whenReady)
         {
-            if (levelEndVal.Trim() != level.endValue.ToString())
+            if (levelEndVal.Trim() != level.endValue.ToString() && int.Parse(levelEndVal.Trim().ToString()) > 0)
             {
+                level.endValue = int.Parse(levelEndVal.Trim().ToString());
+                levelsInJson.levels[level.levelID].endValue = level.endValue;
+                string s = JsonUtility.ToJson(levelsInJson);
+                System.IO.File.WriteAllText(Application.persistentDataPath + "/levelInfo.json", s);
+                
                 Debug.Log("ss");
             }
 
