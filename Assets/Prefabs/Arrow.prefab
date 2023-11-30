@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2455853990199979901}
   - component: {fileID: 2455853990199979842}
   - component: {fileID: 2455853990199979843}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: uc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5092725525403681453}
   - component: {fileID: 5092725525403681452}
   - component: {fileID: 5092725525403681455}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 5092725525522940718}
   - component: {fileID: 5092725525522940689}
   - component: {fileID: 5092725525522940688}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 5092725526080801255}
   - component: {fileID: 5092725526080801254}
   - component: {fileID: 5092725526080801257}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 2455853990786713312}
   - component: {fileID: 2455853990786713314}
   - component: {fileID: 2455853990786713317}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 36
   m_CollisionDetection: 0
@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 5092725526519660266}
   - component: {fileID: 5092725526519660269}
   - component: {fileID: 5092725526519660268}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 5092725526666403120}
   - component: {fileID: 5092725526666403123}
   - component: {fileID: 5092725526666403122}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ GameObject:
   - component: {fileID: 5092725527116965408}
   - component: {fileID: 5092725527116965411}
   - component: {fileID: 5092725527116965410}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

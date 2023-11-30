@@ -12,8 +12,4 @@ public class arrowManager : MonoBehaviour
         stop = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 }

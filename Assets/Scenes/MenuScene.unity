@@ -449,6 +449,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5c0334e5179aa648afb9d49e49ecc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jsonFile: {fileID: 4900000, guid: 7c04edf0269fea74785470a32e7ea9c8, type: 3}
+  levelDataCurr: 
 --- !u!1 &1487364464
 GameObject:
   m_ObjectHideFlags: 0
