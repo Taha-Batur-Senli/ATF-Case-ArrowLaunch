@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 
 public class menuManager : MonoBehaviour
 {
-    public TextAsset jsonFile;
     Levels levelsInJson;
 
     [TextAreaAttribute]
@@ -33,10 +32,8 @@ public class menuManager : MonoBehaviour
 
     private void Start()
     {
-        //levelsInJson = JsonUtility.FromJson<Levels>(Application.persistentDataPath + "/levelInfo.json");
         string s = System.IO.File.ReadAllText(Application.persistentDataPath + "/levelInfo.json");
         levelsInJson = JsonUtility.FromJson<Levels>(s);
-        Debug.Log(s);   
         setLevels(levelsInJson, currLevel);
         getrows();
 
