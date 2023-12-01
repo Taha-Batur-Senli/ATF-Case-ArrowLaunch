@@ -6,17 +6,13 @@ using UnityEngine.UI;
 
 public class leftScript : MonoBehaviour
 {
-    [SerializeField] TextMesh text;
+    [SerializeField] public TextMesh text;
     [SerializeField] GameObject gate;
     string operation;
     int num;
     public bool doOnce = true;
 
     //populate the texts in their respective scripts with the static data retrieved from the menu manager, or open a new data manager present in both scenes with static info
-    public void populate()
-    {
-
-    }
 
     public void readData(Vector3 loc)
     {

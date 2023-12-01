@@ -16,6 +16,12 @@ public class gateManager : MonoBehaviour
         //populate the texts in their respective scripts with the static data retrieved from the menu manager, or open a new data manager present in both scenes with static info
     }
 
+    public void populate(string leftT, string rightT)
+    {
+        left.text.text = leftT;
+        right.text.text = rightT;
+    }
+
     public void alterArrows(int value, Vector3 loc, int specialoperator = 0)
     {
         gameObject.transform.parent.GetComponent<gateToArrow>().setArrows(value, loc, specialoperator);

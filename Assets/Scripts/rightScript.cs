@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class rightScript : MonoBehaviour
 {
-    [SerializeField] TextMesh text;
+    [SerializeField] public TextMesh text;
     [SerializeField] GameObject gate;
     string operation;
     int num;

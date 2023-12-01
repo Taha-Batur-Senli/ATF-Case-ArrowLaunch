@@ -41,8 +41,8 @@ public class menuManager : MonoBehaviour
         {
             for (int i = 0; i < leftElems.Count; i++)
             {
-                left += " " + leftElems[i];
-                right += " " + rightElems[i];
+                left += leftElems[i].ToString();
+                right += rightElems[i].ToString();
             }
 
             levelEndVal = level.endValue.ToString();
@@ -50,6 +50,16 @@ public class menuManager : MonoBehaviour
             levelRightInfo = right.ToString();
             whenReady = true;
         }
+    }
+
+    public string[] getLeft()
+    {
+        return level.leftValues;
+    }
+
+    public string[] getRight()
+    {
+        return level.rightValues;
     }
 
     private void OnValidate()
@@ -62,18 +72,85 @@ public class menuManager : MonoBehaviour
                 levelsInJson.levels[level.levelID].endValue = level.endValue;
                 string s = JsonUtility.ToJson(levelsInJson);
                 System.IO.File.WriteAllText(Application.persistentDataPath + "/levelInfo.json", s);
-                
-                Debug.Log("ss");
             }
 
             if (!levelLeftInfo.ToString().Equals(left))
             {
-                Debug.Log("ss2");
+                int cnt = 0;
+                int start = 0;
+                int a = 0;
+                int len = 0;
+
+                while(len < levelLeftInfo.Length)
+                {
+                    if (cnt == level.leftValues.Length - 1)
+                    {
+                        level.leftValues[cnt] = levelLeftInfo.Trim().ToString().Substring(start);
+                    }
+                    else if (a != 0 && (levelLeftInfo[len] == '+' || levelLeftInfo[len] == '-' || levelLeftInfo[len] == '/' || levelLeftInfo[len] == '*'))
+                    {
+                        if (start == 0)
+                        {
+                            level.leftValues[cnt] = levelLeftInfo.Trim().ToString().Substring(start, a);
+                            cnt++;
+                            start = len;
+                            a = -1;
+                        }
+                        else
+                        {
+                            level.leftValues[cnt] = levelLeftInfo.Trim().ToString().Substring(start, a + 1);
+                            cnt++;
+                            start = len;
+                            a = -1;
+                        }
+
+                    }
+                    len++;
+                    a++;
+                }
+
+                levelsInJson.levels[level.levelID].leftValues = level.leftValues;
+                string s = JsonUtility.ToJson(levelsInJson);
+                System.IO.File.WriteAllText(Application.persistentDataPath + "/levelInfo.json", s);
             }
 
             if (!levelRightInfo.ToString().Equals(right))
             {
-                Debug.Log("ss3");
+                int cnt = 0;
+                int start = 0;
+                int a = 0;
+                int len = 0;
+
+                while (len < levelRightInfo.Length)
+                {
+                    if (cnt == level.rightValues.Length - 1)
+                    {
+                        level.rightValues[cnt] = levelRightInfo.Trim().ToString().Substring(start);
+                    }
+                    else if (a != 0 && (levelRightInfo[len] == '+' || levelRightInfo[len] == '-' || levelRightInfo[len] == '/' || levelRightInfo[len] == '*'))
+                    {
+                        if (start == 0)
+                        {
+                            level.rightValues[cnt] = levelRightInfo.Trim().ToString().Substring(start, a);
+                            cnt++;
+                            start = len;
+                            a = -1;
+                        }
+                        else
+                        {
+                            level.rightValues[cnt] = levelRightInfo.Trim().ToString().Substring(start, a + 1);
+                            cnt++;
+                            start = len;
+                            a = -1;
+                        }
+                    }
+                    len++;
+                    a++;
+                }
+
+                levelsInJson.levels[level.levelID].rightValues = level.rightValues;
+                string s = JsonUtility.ToJson(levelsInJson);
+                System.IO.File.WriteAllText(Application.persistentDataPath + "/levelInfo.json", s);
             }
         }
     }
@@ -82,6 +159,11 @@ public class menuManager : MonoBehaviour
     {
         levels = given;
         level = levels.levels[idL];
+    }
+
+    public int getLevel()
+    {
+        return level.endValue;
     }
 
     public void loadLevel()

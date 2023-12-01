@@ -15,12 +15,20 @@ public class gameManager : MonoBehaviour
     [SerializeField] public GameObject secondBackground;
     [SerializeField] public GameObject ground;
     [SerializeField] public GameObject finalBlock;
+    [SerializeField] public GameObject gate;
+    [SerializeField] public GameObject gateList;
     [SerializeField] public TextMesh endCount;
     [SerializeField] public int width;
+    [SerializeField] public menuManager menuData;
     [SerializeField] public List<string> powerUpList = new List<string>();
+    [SerializeField] public int howManyOnOneRow = 5;
     public bool stop = false;
     public bool stopCamera = false;
     public int createdArrows = 0;
+    int arrowOnDown = 0;
+    int arrowLeft = 0;
+    int arrowRight = 0;
+    int arrowRow = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +36,17 @@ public class gameManager : MonoBehaviour
         gameWon.SetActive(false);
         gameOver.SetActive(false);
         createArrow(Vector3.zero);
+
+        endCount.text = menuData.getLevel().ToString();
+
+        for(int i = 0; i < menuData.getLeft().Length; i++)
+        {
+            GameObject gateToCreate = Instantiate(gate);
+            gateToCreate.transform.SetParent(gateList.transform);
+            gateToCreate.transform.position = new Vector3(0,0, 70 * (i+1));
+            gateToCreate.GetComponent<gateManager>().populate(menuData.getLeft()[i], menuData.getRight()[i]);
+        }
+
     }
 
     // Update is called once per frame
@@ -70,11 +89,40 @@ public class gameManager : MonoBehaviour
             stop = true;
         }
     }
+
     public GameObject createArrow(Vector3 loc)
     {
         GameObject arrowToCreate = Instantiate(arrowPrefab);
         arrowToCreate.transform.SetParent(arrows.transform);
         arrowToCreate.transform.position = loc;
+
+        if (arrowLeft == 0 && arrowRight == 0)
+        {
+            arrowToCreate.transform.position += new Vector3(0, 2.2f * arrowRow, 0);
+            arrowLeft++;
+            arrowRight++;
+        }
+        else if (arrowOnDown % 2 == 0)
+        {
+            arrowToCreate.transform.position += new Vector3(2.2f * arrowLeft, 2.2f * arrowRow, 0);
+            arrowLeft++;
+        }
+        else
+        {
+            arrowToCreate.transform.position += new Vector3(-2.2f * arrowRight, 2.2f * arrowRow, 0);
+            arrowRight++;
+        }
+
+        arrowOnDown++;
+
+        if(arrowOnDown % howManyOnOneRow == 0)
+        {
+            arrowRow++;
+            arrowOnDown = 0;
+            arrowRight = 0;
+            arrowLeft = 0;
+        }
+
         createdArrows++;
         return arrowToCreate;
     }
@@ -83,8 +131,36 @@ public class gameManager : MonoBehaviour
     {
         if(createdArrows > 1)
         {
-            Destroy(arrows.transform.GetChild(createdArrows - 1).gameObject);
             createdArrows--;
+
+            if(arrows.transform.GetChild(createdArrows).gameObject.transform.position.x == 0)
+            {
+                arrowRight--;
+                arrowLeft--;
+            }
+            else if(arrows.transform.GetChild(createdArrows).gameObject.transform.position.x > 0)
+            {
+                arrowRight--;
+            }
+            else
+            {
+                arrowLeft--;
+            }
+
+            Destroy(arrows.transform.GetChild(createdArrows).gameObject);
+
+            if(arrowOnDown == 0)
+            {
+                arrowRow--;
+                arrowOnDown = howManyOnOneRow - 1;
+                arrowLeft = (howManyOnOneRow / 2) + 1;
+                arrowRight = (howManyOnOneRow / 2) + 1;
+            }
+            else
+            {
+                arrowOnDown--;
+            }
+
         }
         else
         {
