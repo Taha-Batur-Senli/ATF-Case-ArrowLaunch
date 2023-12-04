@@ -29,13 +29,14 @@ public class gameManager : MonoBehaviour
     int arrowLeft = 0;
     int arrowRight = 0;
     int arrowRow = 0;
+    GameObject firstArrow;
 
     // Start is called before the first frame update
     void Start()
     {
         gameWon.SetActive(false);
         gameOver.SetActive(false);
-        createArrow(Vector3.zero);
+        createArrow(Vector3.zero, true);
 
         endCount.text = menuData.getLevel().ToString();
 
@@ -90,11 +91,36 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public GameObject createArrow(Vector3 loc)
+    public GameObject createArrow(Vector3 loc, bool first = false)
     {
         GameObject arrowToCreate = Instantiate(arrowPrefab);
         arrowToCreate.transform.SetParent(arrows.transform);
-        arrowToCreate.transform.position = loc;
+        Debug.Log(arrowRight);
+
+        if(arrowLeft < 0)
+        {
+            arrowLeft = 0;
+        }
+        
+        if(arrowRight < 0)
+        {
+            arrowRight = 0;
+        }
+
+        if (first)
+        {
+            firstArrow = arrowToCreate;
+        }
+        else
+        {
+            if (arrowOnDown % howManyOnOneRow == 0)
+            {
+                arrowRight = 0;
+                arrowLeft = 0;
+            }
+        }
+
+        arrowToCreate.transform.position = firstArrow.gameObject.transform.position;
 
         if (arrowLeft == 0 && arrowRight == 0)
         {
@@ -104,13 +130,13 @@ public class gameManager : MonoBehaviour
         }
         else if (arrowOnDown % 2 == 0)
         {
-            arrowToCreate.transform.position += new Vector3(2.2f * arrowLeft, 2.2f * arrowRow, 0);
-            arrowLeft++;
+            arrowToCreate.transform.position += new Vector3(2.2f * arrowRight , 2.2f * arrowRow, 0);
+            arrowRight++;
         }
         else
         {
-            arrowToCreate.transform.position += new Vector3(-2.2f * arrowRight, 2.2f * arrowRow, 0);
-            arrowRight++;
+            arrowToCreate.transform.position += new Vector3(-2.2f * arrowLeft, 2.2f * arrowRow, 0);
+            arrowLeft++;
         }
 
         arrowOnDown++;
@@ -133,23 +159,17 @@ public class gameManager : MonoBehaviour
         {
             createdArrows--;
 
-            if(arrows.transform.GetChild(createdArrows).gameObject.transform.position.x == 0)
+            if (arrowLeft < 0)
             {
-                arrowRight--;
-                arrowLeft--;
-            }
-            else if(arrows.transform.GetChild(createdArrows).gameObject.transform.position.x > 0)
-            {
-                arrowRight--;
-            }
-            else
-            {
-                arrowLeft--;
+                arrowLeft = 0;
             }
 
-            Destroy(arrows.transform.GetChild(createdArrows).gameObject);
+            if (arrowRight < 0)
+            {
+                arrowRight = 0;
+            }
 
-            if(arrowOnDown == 0)
+            if (arrowLeft == 0 && arrowRight == 0)
             {
                 arrowRow--;
                 arrowOnDown = howManyOnOneRow - 1;
@@ -161,6 +181,27 @@ public class gameManager : MonoBehaviour
                 arrowOnDown--;
             }
 
+            if (arrows.transform.GetChild(createdArrows).gameObject.transform.localPosition.x == 0)
+            {
+                arrowRight--;
+                arrowLeft--;
+            }
+            else if(arrows.transform.GetChild(createdArrows).gameObject.transform.localPosition.x > 0)
+            {
+                arrowRight--;
+            }
+            else if(arrows.transform.GetChild(createdArrows).gameObject.transform.localPosition.x < 0)
+            {
+                arrowLeft--;
+            }
+
+            Destroy(arrows.transform.GetChild(createdArrows).gameObject);
+
+            if (arrowOnDown == 0)
+            {
+                arrowRight = 0;
+                arrowLeft = 0;
+            }
         }
         else
         {

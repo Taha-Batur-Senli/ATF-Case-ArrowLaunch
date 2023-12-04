@@ -41,13 +41,12 @@ public class leftScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
         //add collision check here
         if (collision.gameObject.GetComponent<arrowManager>())
         {
             if (doOnce)
             {
-                readData(collision.transform.position);
+                readData(collision.transform.parent.GetChild(0).transform.position);
             }
             doOnce = false;
             gate.GetComponent<gateManager>().clearAll();
